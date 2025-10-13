@@ -388,51 +388,29 @@
                         </ul><!--end nav-->
                     </div><!--end startbarEmailTemplates-->
                 </li><!--end nav-item-->
+
                 <li class="menu-label mt-2">
                     <small class="label-border">
                         <div class="border_left hidden-xs"></div>
                         <div class="border_right"></div>
                     </small>
-                    <span>Crafted</span>
+                    <span>Cài đặt</span>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
                         <i class="iconoir-page-star menu-icon"></i>
-                        <span>Pages</span>
+                        <span>Command</span>
                     </a>
                     <div class="collapse " id="sidebarPages">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="pages-profile.html">Profile</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-notifications.html">Notifications</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-timeline.html">Timeline</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-treeview.html">Treeview</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-starter.html">Starter Page</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-pricing.html">Pricing</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-blogs.html">Blogs</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-faq.html">FAQs</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="pages-gallery.html">Gallery</a>
+                                <a class="nav-link" href="{{ route('admin.config.location') }}">Location</a>
                             </li><!--end nav-item-->
                         </ul><!--end nav-->
                     </div><!--end startbarPages-->
                 </li><!--end nav-item-->
+
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarAuthentication" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAuthentication">
@@ -466,17 +444,6 @@
                     </div><!--end startbarAuthentication-->
                 </li><!--end nav-item-->
             </ul><!--end navbar-nav--->
-            <div class="update-msg text-center">
-                <div
-                    class="d-flex justify-content-center align-items-center thumb-lg update-icon-box  rounded-circle mx-auto">
-                    <img src="assets/images/extra/party.gif" alt="" class="d-inline-block me-1"
-                        height="30">
-                </div>
-                <h5 class="mt-3">Mannat Themes</h5>
-                <p class="mb-3 text-muted">Dastone is a high quality web applications.</p>
-                <a href="javascript: void(0);" class="btn bg-black text-white shadow-sm rounded-pill">Upgrade
-                    your plan</a>
-            </div>
         </div>
     </div><!--end startbar-collapse-->
 </div>

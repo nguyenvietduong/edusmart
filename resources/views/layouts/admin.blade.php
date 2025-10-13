@@ -43,6 +43,8 @@
     <!-- Javascript  -->
     <!-- vendor js -->
 
+    @include('admin.component.modal')
+
     @include('admin.component.javascript')
 </body>
 <!--end body-->

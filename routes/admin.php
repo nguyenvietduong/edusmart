@@ -32,10 +32,10 @@ Route::prefix('admin')->group(function () {
     // Route::get('account/{id?}',         [AccountController::class, "index"])->where(['id' => '[0-9]+'])->name('admin.account');
     // Route::post('account/update-status', [AccountController::class, 'updateStatus'])->name('admin.account.updateStatus');
 
-    // // Config
-    // Route::prefix('config')->group(function () {
-    //     // Location
-    //     Route::get('location',              [LocationController::class, "index"])->name('admin.config.location');
-    //     Route::post('location/import',      [LocationController::class, 'runImportManually'])->name('admin.config.location.import');
-    // });
+    // Config
+    Route::prefix('config')->group(function () {
+        // Location
+        Route::get('location',              [LocationController::class, "index"])->name('admin.config.location');
+        Route::post('location/import',      [LocationController::class, 'runImportManually'])->name('admin.config.location.import');
+    });
 });
