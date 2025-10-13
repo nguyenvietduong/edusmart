@@ -1,32 +1,37 @@
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
-import axios from 'axios';
-window.axios = axios;
+window.Pusher = Pusher;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.Echo = new Echo({
+    broadcaster: "pusher", // vẫn để "pusher"
+    key: "local",           // có thể là bất kỳ chuỗi nào, miễn trùng bên server
+    wsHost: "edusmart.test", // domain hoặc localhost
+    wsPort: 6001,            // port mà bạn chạy `php artisan websockets:serve`
+    forceTLS: false,
+    disableStats: true,
+    enabledTransports: ['ws', 'wss'],
+    cluster: "mt1", // 🟩 THÊM VÀO DÙ KHÔNG DÙNG PUSHER THẬT, ĐỂ NÓ KHỎI BÁO LỖI
+});
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+// Khi kết nối thành công
+window.Echo.connector.pusher.connection.bind('connected', () => {
+    console.log("%c✅ Đã kết nối WebSocket thành công!", "color: green; font-weight: bold;");
+});
 
-// import Echo from 'laravel-echo';
+// Khi bị mất kết nối
+window.Echo.connector.pusher.connection.bind('disconnected', () => {
+    console.log("%c⚠️ Mất kết nối WebSocket!", "color: orange; font-weight: bold;");
+});
 
-// import Pusher from 'pusher-js';
-// window.Pusher = Pusher;
+// Khi có lỗi trong kết nối
+window.Echo.connector.pusher.connection.bind('error', (err) => {
+    console.error("❌ Lỗi WebSocket:", err);
+});
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: import.meta.env.VITE_PUSHER_APP_KEY,
-//     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? 'mt1',
-//     wsHost: import.meta.env.VITE_PUSHER_HOST ? import.meta.env.VITE_PUSHER_HOST : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
-//     wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
-//     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-//     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
-//     enabledTransports: ['ws', 'wss'],
-// });
+// Lắng nghe kênh public hoặc private
+window.Echo.channel('location')
+    .listen('.import.done', (e) => {
+        console.log("📦 Dữ liệu sự kiện nhận được:", e);
+        alert(`📦 Nhập dữ liệu xong: ${e.message}`);
+    });

@@ -34,7 +34,15 @@ Hệ thống này được xây dựng bằng **Laravel**, nhằm quản lý to�
 
 ## Cài đặt
 
-1. Clone repo:
+1. Setup:
 ```bash
-git clone https://github.com/your-repo/students-management.git
-cd students-management
+composer require beyondcode/laravel-websockets -W
+php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider" --tag="config"
+php artisan vendor:publish --provider="BeyondCode\LaravelWebSockets\WebSocketsServiceProvider"
+php artisan migrate
+
+1. Run:
+```bash
+npm run dev
+php artisan websockets:serve
+php artisan queue:work

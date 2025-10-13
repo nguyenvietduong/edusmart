@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,27 @@ class Location extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Location::class, 'parent_id');
+    }
+
+    public function getTypeAttribute($value): string
+    {
+        $map = [
+            'tinh'  => 'Tỉnh',
+            'huyen' => 'Huyện',
+            'xa'    => 'Xã',
+        ];
+
+        return $map[$value] ?? ucfirst($value);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('H:i:s d/m/Y');
+    }
+    
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('H:i:s d/m/Y');
     }
 
     // Get the full path of the location including parent names

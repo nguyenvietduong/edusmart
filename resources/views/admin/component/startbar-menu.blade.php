@@ -394,18 +394,18 @@
                         <div class="border_left hidden-xs"></div>
                         <div class="border_right"></div>
                     </small>
-                    <span>Cài đặt</span>
+                    <span>Cấu Hình</span>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
                         <i class="iconoir-page-star menu-icon"></i>
-                        <span>Command</span>
+                        <span>Yêu Cầu</span>
                     </a>
                     <div class="collapse " id="sidebarPages">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.config.location') }}">Location</a>
+                                <a class="nav-link" href="{{ route('admin.config.command.location') }}">Khu vực hành chính</a>
                             </li><!--end nav-item-->
                         </ul><!--end nav-->
                     </div><!--end startbarPages-->

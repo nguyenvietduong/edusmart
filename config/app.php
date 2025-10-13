@@ -74,6 +74,35 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Theme Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the default theme for the application.
+    | You can change it to 'light' or 'dark' as per your application's
+    | requirements. The user can also switch themes dynamically, which
+    | will be stored in the session.
+    |
+    */
+
+    'theme' => 'light', // Default theme is set to 'light'.
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Menu Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the default menu for the application.
+    | You can change it to 'default' or 'collapsed' as per your application's
+    | requirements. The user can also switch menus dynamically, which
+    | will be stored in the session.
+    |
+    */
+
+    'menu' => 'default', // Default menu is set to 'default'.
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
     |
@@ -169,6 +198,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class,
     ])->toArray(),
 
     /*

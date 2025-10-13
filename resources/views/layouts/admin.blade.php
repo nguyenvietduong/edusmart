@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="light">
+<html lang="en" dir="ltr" data-startbar="light" data-bs-theme="{{ session('theme', 'light') }}">
 
 <head>
     @include('admin.component.head')
 </head>
 
-<body>
+<body data-sidebar-size="default">
 
     <!-- Top Bar Start -->
     @include('admin.component.topbar')
@@ -42,8 +42,6 @@
 
     <!-- Javascript  -->
     <!-- vendor js -->
-
-    @include('admin.component.modal')
 
     @include('admin.component.javascript')
 </body>

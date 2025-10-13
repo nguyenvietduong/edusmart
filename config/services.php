@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'provinces_api' => [
+        'url' => env('PROVINCES_API_URL', 'https://provinces.open-api.vn/api/?depth=3'),
+    ],
 ];

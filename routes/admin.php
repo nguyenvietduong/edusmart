@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\Config\LocationController;
+use App\Http\Controllers\Admin\Config\ToggleThemeController;
+use App\Http\Controllers\Admin\Config\ToggleMenuController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Auth\ProfileAdminController;
@@ -34,8 +36,10 @@ Route::prefix('admin')->group(function () {
 
     // Config
     Route::prefix('config')->group(function () {
-        // Location
-        Route::get('location',              [LocationController::class, "index"])->name('admin.config.location');
-        Route::post('location/import',      [LocationController::class, 'runImportManually'])->name('admin.config.location.import');
+        Route::prefix('command')->group(function () {
+            // Location
+            Route::get('location',              [LocationController::class, "index"])->name('admin.config.command.location');
+            Route::post('location/import',      [LocationController::class, 'runImportManually'])->name('admin.config.command.location.import');
+        });
     });
 });

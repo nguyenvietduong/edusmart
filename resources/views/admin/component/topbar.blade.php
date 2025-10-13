@@ -4,11 +4,8 @@
 
 
             <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
-                <li>
-                    <button class="nav-link mobile-menu-btn nav-icon" id="togglemenu">
-                        <i class="iconoir-menu"></i>
-                    </button>
-                </li>
+                @include('admin.component.toggle-menu')
+                
                 <li class="mx-2 welcome-text">
                     <a class=" btn btn-sm btn-soft-primary" href="#" role="button"><i
                             class="fas fa-plus me-2"></i>New Task</a>
@@ -41,12 +38,7 @@
                     </div>
                 </li><!--end topbar-language-->
 
-                <li class="topbar-item">
-                    <a class="nav-link nav-icon" href="javascript:void(0);" id="light-dark-mode">
-                        <i class="iconoir-half-moon dark-mode"></i>
-                        <i class="iconoir-sun-light light-mode"></i>
-                    </a>
-                </li>
+                @include('admin.component.light-dark-toggle')
 
                 <li class="dropdown topbar-item">
                     <a class="nav-link dropdown-toggle arrow-none nav-icon" data-bs-toggle="dropdown" href="#"

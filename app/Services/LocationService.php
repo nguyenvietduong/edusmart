@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use App\Events\LocationImported;
 use App\Repositories\LocationRepositoryEloquent;
 use App\Interfaces\Services\LocationServiceInterface;
 
@@ -10,20 +11,27 @@ class LocationService implements LocationServiceInterface
 {
     protected Client $client;
     protected LocationRepositoryEloquent $locationRepositoryEloquent;
+    protected ActivityService $activityService;
 
-    public function __construct(LocationRepositoryEloquent $locationRepositoryEloquent)
-    {
+    public function __construct(
+        LocationRepositoryEloquent $locationRepositoryEloquent,
+        ActivityService $activityService
+    ) {
         $this->client = new Client();
         $this->locationRepositoryEloquent = $locationRepositoryEloquent;
+        $this->activityService = $activityService;
+    }
+
+    public function getAll(array $filters, int $perPage)
+    {
+        return $this->locationRepositoryEloquent->getAll($filters, $perPage);
     }
 
     public function import(callable $logger = null): void
     {
-        $this->log($logger, "🔄 Bắt đầu import các khu vực hành chính của Việt Nam từ provinces.open-api.vn...");
-
+        $this->activityService->log('IMPORT_LOCATION', 'Bắt đầu import dữ liệu địa điểm.');
         // Xoá dữ liệu cũ
         $this->locationRepositoryEloquent->truncateAll();
-        $this->log($logger, "🗑️ Dữ liệu cũ đã được xoá.");
 
         // Lấy dữ liệu tỉnh/huyện/xã từ OpenAPI
         $response = $this->client->get(config('services.provinces_api.url'));
@@ -34,41 +42,32 @@ class LocationService implements LocationServiceInterface
             $provinceModel = $this->locationRepositoryEloquent->create([
                 'name' => $province['name'],
                 'code' => $province['code'],
-                'type' => 'tỉnh',
+                'type' => 'tinh',
                 'parent_id' => null,
             ]);
-            $this->log($logger, "✅ Đã lưu tỉnh: " . $provinceModel->name);
 
             foreach ($province['districts'] as $district) {
                 // Lưu huyện
                 $districtModel = $this->locationRepositoryEloquent->create([
                     'name' => $district['name'],
                     'code' => $district['code'],
-                    'type' => 'huyện',
+                    'type' => 'huyen',
                     'parent_id' => $provinceModel->id,
                 ]);
-                $this->log($logger, "  └─✅ Huyện: " . $districtModel->name);
 
                 foreach ($district['wards'] as $ward) {
                     // Lưu xã
                     $wardModel = $this->locationRepositoryEloquent->create([
                         'name' => $ward['name'],
                         'code' => $ward['code'],
-                        'type' => 'xã',
+                        'type' => 'xa',
                         'parent_id' => $districtModel->id,
                     ]);
-                    $this->log($logger, "      └─✅ Xã: " . $wardModel->name);
                 }
             }
         }
 
-        $this->log($logger, "🎉 Import hoàn tất.");
-    }
-
-    protected function log(?callable $logger, string $message): void
-    {
-        if ($logger) {
-            $logger($message);
-        }
+        event(new LocationImported('🎉 Import dữ liệu địa điểm đã hoàn tất!'));
+        $this->activityService->log('IMPORT_LOCATION_SUCCESS', 'Import dữ liệu địa điểm thành công.');
     }
 }

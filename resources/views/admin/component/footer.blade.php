@@ -9,11 +9,11 @@
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            Dastone
+                            DuongNguyn
                             <span class="text-muted d-none d-sm-inline-block float-end">
-                                Design with
+                                Codeing
                                 <i class="iconoir-heart-solid text-danger align-middle"></i>
-                                by Mannatthemes</span>
+                                by NguynVietDuong</span>
                         </p>
                     </div>
                 </div>

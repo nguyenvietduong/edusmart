@@ -14,6 +14,24 @@ class LocationRepositoryEloquent extends BaseRepository implements LocationRepos
         return Location::class;
     }
 
+    public function getAll($filters = [], $perPage = 20)
+    {
+        $query = $this->model->query();
+    
+        if (!empty($filters['type'])) {
+            $query->where('type', $filters['type']);
+        }
+    
+        // Lọc theo từ khóa tìm kiếm
+        if (!empty($filters['search'])) {
+            $query->where('name', 'like', '%' . $filters['search'] . '%');
+        }
+    
+        return $query
+            ->orderBy('code', 'asc')
+            ->paginate($perPage);
+    }    
+
     public function truncateAll()
     {
         $this->model->query()->delete();
