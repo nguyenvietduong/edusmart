@@ -16,6 +16,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $repositories = [
             'App\Interfaces\Repositories\LocationRepositoryInterface'   => 'App\Repositories\LocationRepositoryEloquent',
             'App\Interfaces\Repositories\RoleRepositoryInterface'       => 'App\Repositories\RoleRepositoryEloquent',
+            'App\Interfaces\Repositories\StudentRepositoryInterface'    => 'App\Repositories\StudentRepositoryEloquent',
         ];
 
         foreach ($repositories as $interface => $implementation) {

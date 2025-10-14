@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\Services\ImageServiceInterface'     => 'App\Services\ImageService',
             'App\Interfaces\Services\LocationServiceInterface'  => 'App\Services\LocationService',
             'App\Interfaces\Services\RoleServiceInterface'      => 'App\Services\RoleService',
+            'App\Interfaces\Services\StudentServiceInterface'   => 'App\Services\StudentService',
         ];
 
         foreach ($services as $interface => $implementation) {

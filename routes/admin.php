@@ -28,9 +28,8 @@ Route::prefix('admin')
         // Dashboard
         Route::get("dashboard", [DashboardController::class, 'index'])->name("admin.dashboard");
 
-        // User
+        // Account
         Route::prefix('account')->group(function () {
-
             // Học sinh
             Route::prefix('student')->group(function () {
                 Route::get('', [StudentController::class, "index"])
@@ -39,7 +38,7 @@ Route::prefix('admin')
 
             // Giáo viên
             Route::prefix('teacher')->group(function () {
-                Route::get('', [TeacherController::class, "index"])
+                Route::get('',)
                     ->name('admin.account.teacher');
             });
 

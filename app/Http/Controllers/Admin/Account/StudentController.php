@@ -3,42 +3,38 @@
 namespace App\Http\Controllers\Admin\Account;
 
 use App\Http\Controllers\Controller;
-use App\Services\AccountService;
-use Illuminate\Http\JsonResponse;
-
-// Request
-use App\Http\Requests\Admin\AccountListRequest;
-use App\Http\Requests\Admin\UpdateUserStatusRequest;
+use App\Services\StudentService;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    // Base path for the view files
     const PATH_VIEW = 'admin.account.student.';
 
-    protected AccountService $accountService;
+    protected StudentService $studentService;
 
-    public function __construct(AccountService $accountService)
+    /**
+     * Constructor to inject the StudentLogService dependency.
+     */
+    public function __construct(StudentService $studentService)
     {
-        $this->accountService = $accountService;
+        $this->studentService = $studentService;
     }
 
-    public function index(AccountListRequest $request)
+    /**
+     * Display a list of studentLogs with optional filters.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
     {
-        $roleId = $request->input('id', 3);
-        $datas  = $this->accountService->getAll($roleId);
+        // $studentLogs = $this->studentLogService->getAll([
+        //     'start_time' => request('start_time'),
+        //     'end_time' => request('end_time'),
+        //     'search' => request('search'),  // Filter by search term
+        // ], 5); // Paginate 15 items per page
 
-        return view(self::PATH_VIEW . __FUNCTION__, compact('datas', 'roleId'));
-    }
-
-    public function updateStatus(UpdateUserStatusRequest $request): JsonResponse
-    {
-        $success = $this->accountService->updateStatus(
-            $request->id,
-            $request->isActive
-        );
-
-        return response()->json([
-            'success' => $success,
-            'message' => $success ? 'User status updated successfully.' : 'Update failed or user deleted.'
-        ]);
+        return view(self::PATH_VIEW . __FUNCTION__);
     }
 }
