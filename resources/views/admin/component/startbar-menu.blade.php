@@ -4,58 +4,42 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-auto w-100">
                 <li class="menu-label mt-2">
-                    <span>Navigation</span>
+                    <span>Danh mục</span>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="iconoir-report-columns menu-icon"></i>
-                        <span>Dashboards</span>
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <i class="iconoir-paste-clipboard menu-icon"></i>
+                        <span>Dashboard</span>
                     </a>
-                    <div class="collapse " id="sidebarDashboards">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a href="index.html" class="nav-link ">Analytics</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a href="sales-index.html" class="nav-link ">Sales</a>
-                            </li><!--end nav-item-->
-                        </ul><!--end nav-->
-                    </div>
                 </li><!--end nav-item-->
 
+                <li class="menu-label mt-2">
+                    <span>Hệ thống</span>
+                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#sidebarEcommerce" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarEcommerce">
-                        <i class="iconoir-cart-alt menu-icon"></i>
-                        <span>Ecommerce</span>
+                    <a class="nav-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarUsers">
+                        <i class="iconoir-community menu-icon"></i>
+                        <span>Người dùng</span>
                     </a>
-                    <div class="collapse " id="sidebarEcommerce">
+                    <div class="collapse" id="sidebarUsers">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="ecommerce-products.html">Products</a>
+                                <a class="nav-link" href="{{ route('admin.account.student') }}">Học sinh</a>
                             </li><!--end nav-item-->
                             <li class="nav-item">
-                                <a class="nav-link" href="ecommerce-customers.html">Customers</a>
+                                <a class="nav-link" href="{{ route('admin.account.teacher') }}">Giáo viên</a>
                             </li><!--end nav-item-->
                             <li class="nav-item">
-                                <a class="nav-link" href="ecommerce-customer-details.html">Customer
-                                    Details</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="ecommerce-orders.html">Orders</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="ecommerce-order-details.html">Order Details</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="ecommerce-refunds.html">Refunds</a>
+                                <a class="nav-link" href="{{ route('admin.account.activity-log') }}">Nhật ký hoạt
+                                    động</a>
                             </li><!--end nav-item-->
                         </ul><!--end nav-->
                     </div>
                 </li><!--end nav-item-->
+
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarProjects" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarProjects">
@@ -399,49 +383,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
-                        <i class="iconoir-page-star menu-icon"></i>
-                        <span>Yêu Cầu</span>
+                        <i class="fab fa-accessible-icon menu-icon"></i>
+                        <span>Công Việc</span>
                     </a>
                     <div class="collapse " id="sidebarPages">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.config.command.location') }}">Khu vực hành chính</a>
+                                <a class="nav-link" href="{{ route('admin.config.job.location') }}">Khu vực hành
+                                    chính</a>
                             </li><!--end nav-item-->
                         </ul><!--end nav-->
                     </div><!--end startbarPages-->
-                </li><!--end nav-item-->
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#sidebarAuthentication" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarAuthentication">
-                        <i class="iconoir-fingerprint-lock-circle menu-icon"></i>
-                        <span>Authentication</span>
-                    </a>
-                    <div class="collapse " id="sidebarAuthentication">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-login.html">Log in</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-register.html">Register</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-recover-pw.html">Re-Password</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-lock-screen.html">Lock Screen</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-maintenance.html">Maintenance</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-404.html">Error 404</a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="auth-500.html">Error 500</a>
-                            </li><!--end nav-item-->
-                        </ul><!--end nav-->
-                    </div><!--end startbarAuthentication-->
                 </li><!--end nav-item-->
             </ul><!--end navbar-nav--->
         </div>

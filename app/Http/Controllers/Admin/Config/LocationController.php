@@ -3,43 +3,57 @@
 namespace App\Http\Controllers\Admin\Config;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Artisan;
+use App\Jobs\ImportVietnamLocationsJob;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
+    // Base path for the view files
     const PATH_VIEW = 'admin.config.location.';
 
     protected LocationService $locationService;
 
+    /**
+     * Constructor to inject the LocationService dependency.
+     */
     public function __construct(LocationService $locationService)
     {
         $this->locationService = $locationService;
     }
 
+    /**
+     * Display a list of locations with optional filters.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $locations = $this->locationService->getAll([
-            'type' => request('type'),
-            'search' => request('search'),
-        ], 15);
+            'type' => request('type'),      // Filter by location type
+            'search' => request('search'),  // Filter by search term
+        ], 15); // Paginate 15 items per page
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('locations'));
     }
 
+    /**
+     * Trigger the manual import of Vietnam locations asynchronously.
+     * This dispatches a job to the queue with the currently authenticated user ID.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function runImportManually()
     {
-        try {
-            dispatch(function () {
-                Artisan::call('import:vietnam-locations');
-            });
+        // Get the ID of the currently authenticated user
+        $userId = Auth::id();
 
-            return response()->json(['message' => 'Import đang được thực thi ngầm.']);
-        } catch (\Throwable $e) {
-            Log::error('Lỗi khi chạy command import location', ['error' => $e->getMessage()]);
-            return response()->json(['message' => 'Không thể thực thi import: ' . $e->getMessage()], 500);
-        }
+        // Dispatch the import job to the queue
+        dispatch(new ImportVietnamLocationsJob($userId));
+
+        // Return a JSON response indicating the import has started
+        return response()->json(['message' => 'Import is being processed in the background.']);
     }
 }

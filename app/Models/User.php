@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use App\Traits\HasUserType;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUserType;
 
     /**
      * The attributes that are mass assignable.
@@ -21,20 +22,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
+        'first_name',
+        'last_name',
         'email',
         'password',
-        'phone',
-        'avatar',
-        'gender',
-        'birthdate',
-        'points',
-        'vip_level',
-        'status',
-        'is_online',
-        'last_seen',
-        'current_room',
         'role_id',
+        'card_uid',
+        'face_id',
+        'user_type',
     ];
 
     /**
@@ -54,9 +49,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birthday' => 'date',
-        'last_login_at' => 'datetime',
-        'is_active' => 'boolean',
     ];
 
     /**
@@ -76,6 +68,35 @@ class User extends Authenticatable
         return $this->belongsToMany(Location::class, 'location_user');
     }
 
+    /**
+     * Get the student associated with the user.
+     */
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'user_id');
+    }
+
+    /**
+     * Get the teacher associated with the user.
+     */
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class, 'user_id');
+    }
+
+    // Accessor để tự động lấy profile dựa trên role
+    public function getProfileAttribute()
+    {
+        return match ($this->user_type) {
+            'student' => $this->student,
+            'teacher' => $this->teacher,
+            'admin' => $this->teacher,
+            default => null
+        };
+    }
+
     // Accessor methods for masking sensitive information
     public function getMaskedEmailAttribute()
     {
@@ -85,12 +106,6 @@ class User extends Authenticatable
 
         $domain = Str::after($this->email, '@');
         return '***@' . $domain;
-    }
-
-    // Mask phone number to show only the first 4 digits
-    public function getMaskedPhoneAttribute()
-    {
-        return $this->phone ? substr($this->phone, 0, 4) . '***' : '';
     }
 
     // Mask address to show only the first 30 characters

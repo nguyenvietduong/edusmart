@@ -15,4 +15,8 @@
 <script src="{{ asset(config('app.asset_admin_path') . '/js/toggle-theme.js') }}"></script>
 <script src="{{ asset(config('app.asset_admin_path') . '/js/toggle-menu.js') }}"></script>
 
+<script>
+    const userId = {{ Auth::check() ? Auth::id() : 'null' }};
+</script>
+
 @stack('script')

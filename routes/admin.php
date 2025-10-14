@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Config\LocationController;
 use App\Http\Controllers\Admin\Config\ToggleThemeController;
 use App\Http\Controllers\Admin\Config\ToggleMenuController;
-use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\Account\StudentController;
+use App\Http\Controllers\Admin\Account\TeacherController;
+use App\Http\Controllers\Admin\Account\ActivityLogController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Auth\ProfileAdminController;
 use Illuminate\Support\Facades\Route;
@@ -20,26 +22,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->group(function () {
-    // //  Role
-    // Route::get('role',                  [RoleController::class, "index"])->name('admin.role');
+Route::prefix('admin')
+    ->middleware('auth') // <-- thêm middleware ở đây
+    ->group(function () {
+        // Dashboard
+        Route::get("dashboard", [DashboardController::class, 'index'])->name("admin.dashboard");
 
-    // Dashboard
-    Route::get("dashboard", [DashboardController::class, 'index'])->name("admin.dashboard");
+        // User
+        Route::prefix('account')->group(function () {
 
-    // // Profile
-    // Route::get('profile',               [ProfileAdminController::class, "index"])->name('admin.profile');
+            // Học sinh
+            Route::prefix('student')->group(function () {
+                Route::get('', [StudentController::class, "index"])
+                    ->name('admin.account.student');
+            });
 
-    // // Account
-    // Route::get('account/{id?}',         [AccountController::class, "index"])->where(['id' => '[0-9]+'])->name('admin.account');
-    // Route::post('account/update-status', [AccountController::class, 'updateStatus'])->name('admin.account.updateStatus');
+            // Giáo viên
+            Route::prefix('teacher')->group(function () {
+                Route::get('', [TeacherController::class, "index"])
+                    ->name('admin.account.teacher');
+            });
 
-    // Config
-    Route::prefix('config')->group(function () {
-        Route::prefix('command')->group(function () {
-            // Location
-            Route::get('location',              [LocationController::class, "index"])->name('admin.config.command.location');
-            Route::post('location/import',      [LocationController::class, 'runImportManually'])->name('admin.config.command.location.import');
+            // Nhật ký hoạt động
+            Route::prefix('activity-log')->group(function () {
+                Route::get('', [ActivityLogController::class, "index"])
+                    ->name('admin.account.activity-log');
+            });
+        });
+
+        // Config
+        Route::prefix('config')->group(function () {
+            Route::prefix('job')->group(function () {
+                // Location
+                Route::get('location', [LocationController::class, "index"])->name('admin.config.job.location');
+                Route::post('location/import', [LocationController::class, 'runImportManually'])->name('admin.config.job.location.import');
+            });
         });
     });
-});

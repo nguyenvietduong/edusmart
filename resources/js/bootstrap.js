@@ -28,10 +28,3 @@ window.Echo.connector.pusher.connection.bind('disconnected', () => {
 window.Echo.connector.pusher.connection.bind('error', (err) => {
     console.error("❌ Lỗi WebSocket:", err);
 });
-
-// Lắng nghe kênh public hoặc private
-window.Echo.channel('location')
-    .listen('.import.done', (e) => {
-        console.log("📦 Dữ liệu sự kiện nhận được:", e);
-        alert(`📦 Nhập dữ liệu xong: ${e.message}`);
-    });

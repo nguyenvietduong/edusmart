@@ -6,7 +6,7 @@
         'title' => 'Khu vực hành chính',
         'items' => [
         'Cấu Hình' => null,
-        'Yêu Cầu' => null,
+        'Công Việc' => null,
         'Khu vực hành chính' => null,
         ]
     ])
@@ -37,7 +37,6 @@
 @push('script')
 <script>
     const _token = "{{ csrf_token() }}";
-    const url_import_location = "{{ route('admin.config.command.location.import') }}";
+    const url_import_location = "{{ route('admin.config.job.location.import') }}";
 </script>
-<script src="{{ asset(config('app.asset_admin_path') . '/js/config/location/import-location.js') }}"></script>
 @endpush

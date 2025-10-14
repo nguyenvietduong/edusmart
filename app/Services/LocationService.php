@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use App\Events\LocationImported;
 use App\Repositories\LocationRepositoryEloquent;
 use App\Interfaces\Services\LocationServiceInterface;
 
@@ -27,9 +26,8 @@ class LocationService implements LocationServiceInterface
         return $this->locationRepositoryEloquent->getAll($filters, $perPage);
     }
 
-    public function import(callable $logger = null): void
+    public function import(callable $logger = null, ?int $userId = null): void
     {
-        $this->activityService->log('IMPORT_LOCATION', 'Bắt đầu import dữ liệu địa điểm.');
         // Xoá dữ liệu cũ
         $this->locationRepositoryEloquent->truncateAll();
 
@@ -67,7 +65,6 @@ class LocationService implements LocationServiceInterface
             }
         }
 
-        event(new LocationImported('🎉 Import dữ liệu địa điểm đã hoàn tất!'));
-        $this->activityService->log('IMPORT_LOCATION_SUCCESS', 'Import dữ liệu địa điểm thành công.');
+        $this->activityService->log($userId, 'IMPORT_LOCATION_SUCCESS', 'Import dữ liệu địa điểm thành công.');
     }
 }

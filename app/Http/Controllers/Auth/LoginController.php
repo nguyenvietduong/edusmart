@@ -50,6 +50,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            activityLog()->log(Auth::id(), 'login', 'auth', null, null, 'Người dùng đăng nhập');
             return redirect()->intended($this->redirectTo);
         }
 
@@ -66,6 +67,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        activityLog()->log(Auth::id(), 'logout', 'auth', null, null, 'Người dùng đăng xuất');
         Auth::logout();
 
         $request->session()->invalidate();

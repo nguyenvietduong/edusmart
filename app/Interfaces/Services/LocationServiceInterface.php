@@ -11,5 +11,5 @@ interface LocationServiceInterface
      * @param callable|null $logger Optional logger callback for messages.
      * @return void
      */
-    public function import(callable $logger = null): void;
+    public function import(callable $logger = null, ?int $userId = null): void;
 }

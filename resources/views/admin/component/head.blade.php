@@ -21,4 +21,4 @@
 <link href="{{ asset(config('app.asset_admin_path') . '/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset(config('app.asset_admin_path') . '/libs/animate.css/animate.min.css') }}" rel="stylesheet" type="text/css">
 
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/import-location-form.js'])

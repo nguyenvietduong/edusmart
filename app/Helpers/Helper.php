@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Services\ActivityService;
+
+if (!function_exists('activityLog')) {
+    function activityLog(): ActivityService
+    {
+        return app(ActivityService::class);
+    }
+}
 
 if (!function_exists('set_active')) {
     /**
@@ -370,48 +378,5 @@ if (! function_exists('parseImdbRating')) {
             return $rating['value'] ?? 0;
         }
         return $rating ?? 0;
-    }
-}
-
-if (!function_exists('renderCountryNames')) {
-    /**
-     * Chuyển code quốc gia sang tên hiển thị
-     *
-     * @param array $originCountries - mảng code quốc gia từ API
-     * @param array $countryMap - map code => tên hiển thị
-     * @return string
-     */
-    function renderCountryNames(array $originCountries, array $countryMap = [])
-    {
-        if (empty($countryMap)) {
-            $countryMap = [
-                'GB' => 'Anh',
-                'CA' => 'Canada',
-                'KR' => 'Hàn Quốc',
-                'HK' => 'Hồng Kông',
-                'US' => 'Mỹ',
-                'JP' => 'Nhật Bản',
-                'FR' => 'Pháp',
-                'TH' => 'Thái Lan',
-                'CN' => 'Trung Quốc',
-                'AU' => 'Úc',
-                'TW' => 'Đài Loan',
-                'DE' => 'Đức',
-            ];
-        }
-
-        if (empty($originCountries)) {
-            return ''; // không có quốc gia
-        }
-
-        $names = [];
-        foreach ($originCountries as $code) {
-            if (isset($countryMap[$code])) {
-                $names[] = $countryMap[$code];
-            }
-        }
-
-        // Nối tên các quốc gia thành chuỗi, ví dụ: "Pháp, Nhật Bản"
-        return implode(', ', $names);
     }
 }
