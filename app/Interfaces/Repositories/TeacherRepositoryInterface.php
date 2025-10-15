@@ -4,48 +4,48 @@ namespace App\Interfaces\Repositories;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-interface StudentRepositoryInterface extends RepositoryInterface
+interface TeacherRepositoryInterface extends RepositoryInterface
 {
 
     /**
-     * Get all students with filters.
+     * Get all teachers with filters.
      *
      * @param array $filters
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getAllStudent(array $filters, int $perPage);
+    public function getAllTeacher(array $filters, int $perPage);
 
     // /**
-    //  * Get student details by ID.
+    //  * Get teacher details by ID.
     //  *
     //  * @param int $id
     //  * @return mixed
     //  */
-    // public function getStudentDetail(int $id);
+    // public function getTeacherDetail(int $id);
 
     // /**
-    //  * Update an student by ID with new data.
+    //  * Update an teacher by ID with new data.
     //  *
     //  * @param int $id
     //  * @param array $params
     //  * @return mixed
     //  */
-    // public function updateStudent(int $id, array $params);
+    // public function updateTeacher(int $id, array $params);
 
     // /**
-    //  * Create a new student with the provided data.
+    //  * Create a new teacher with the provided data.
     //  *
     //  * @param array $params
     //  * @return mixed
     //  */
-    // public function createStudent(array $params);
+    // public function createTeacher(array $params);
 
     // /**
-    //  * Delete an student by ID.
+    //  * Delete an teacher by ID.
     //  *
     //  * @param int $id
     //  * @return bool
     //  */
-    // public function deleteStudent(int $id);
+    // public function deleteTeacher(int $id);
 }

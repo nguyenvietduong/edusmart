@@ -41,7 +41,7 @@ class ActivityRepositoryEloquent extends BaseRepository implements ActivityRepos
         }
 
         return $query
-            ->orderBy('id', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate($perPage);
     }
 

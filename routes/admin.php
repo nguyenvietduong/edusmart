@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Config\LocationController;
-use App\Http\Controllers\Admin\Config\ToggleThemeController;
-use App\Http\Controllers\Admin\Config\ToggleMenuController;
+use App\Http\Controllers\Admin\SchoolController;
 use App\Http\Controllers\Admin\Account\StudentController;
 use App\Http\Controllers\Admin\Account\TeacherController;
 use App\Http\Controllers\Admin\Account\ActivityLogController;
@@ -28,6 +27,8 @@ Route::prefix('admin')
         // Dashboard
         Route::get("dashboard", [DashboardController::class, 'index'])->name("admin.dashboard");
 
+        Route::get("school", [SchoolController::class, 'index'])->name("admin.school");
+
         // Account
         Route::prefix('account')->group(function () {
             // Học sinh
@@ -38,7 +39,7 @@ Route::prefix('admin')
 
             // Giáo viên
             Route::prefix('teacher')->group(function () {
-                Route::get('',)
+                Route::get('', [TeacherController::class, "index"])
                     ->name('admin.account.teacher');
             });
 

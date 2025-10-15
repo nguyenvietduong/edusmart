@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -49,6 +50,31 @@ class Teacher extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function homeroomClasses()
+    {
+        return $this->hasMany(ClassModel::class, 'homeroom_teacher_id');
+    }
+
+    public function classes()
+    {
+        return $this->belongsToMany(
+            ClassModel::class,
+            'teacher_subject_class', // tên bảng trung gian
+            'teacher_id',            // khóa ngoại bên bảng teacher
+            'class_id'               // khóa ngoại bên bảng classes
+        )->withPivot('subject_id', 'semester')->withTimestamps();
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(
+            Subject::class,
+            'teacher_subject_class',
+            'teacher_id',
+            'subject_id'
+        )->withPivot('class_id', 'semester')->withTimestamps();
+    }
+
     /**
      * Accessor: hiển thị trạng thái công tác
      */
@@ -63,6 +89,21 @@ class Teacher extends Model
     public function getAgeAttribute()
     {
         return $this->birth_date ? $this->birth_date->age : null;
+    }
+
+    public function getGenderAttribute()
+    {
+        return match ($this->attributes['gender'] ?? null) {
+            'male'   => 'Nam',
+            'female' => 'Nữ',
+            'other'  => 'Khác',
+            default  => null,
+        };
+    }
+
+    public function getFormattedBirthDateAttribute()
+    {
+        return $this->birth_date ? Carbon::parse($this->birth_date)->format('d/m/Y') : null;
     }
 
     /**

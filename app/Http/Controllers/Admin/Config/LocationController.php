@@ -34,7 +34,7 @@ class LocationController extends Controller
         $locations = $this->locationService->getAll([
             'type' => request('type'),      // Filter by location type
             'search' => request('search'),  // Filter by search term
-        ], 15); // Paginate 15 items per page
+        ], 10); // Paginate 15 items per page
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('locations'));
     }

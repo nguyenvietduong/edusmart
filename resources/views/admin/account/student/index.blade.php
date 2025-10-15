@@ -5,8 +5,8 @@
     @include('admin.component.breadcrumb', [
         'title' => 'Học sinh',
         'items' => [
-        'Cấu Hình' => null,
-        'Công Việc' => null,
+        'Hệ thống' => null,
+        'Người dùng' => null,
         'Học sinh' => null,
         ]
     ])

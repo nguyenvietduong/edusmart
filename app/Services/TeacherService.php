@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Interfaces\Repositories\StudentRepositoryInterface;
-use App\Interfaces\Services\StudentServiceInterface;
+use App\Interfaces\Repositories\TeacherRepositoryInterface;
+use App\Interfaces\Services\TeacherServiceInterface;
 use App\Interfaces\Services\ImageServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -12,73 +12,73 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-class StudentService extends BaseService implements StudentServiceInterface
+class TeacherService extends BaseService implements TeacherServiceInterface
 {
-    protected $studentRepository; // Repository for student-related database operations
+    protected $teacherRepository; // Repository for teacher-related database operations
     protected $imageService; // Service for handling image storage and management
 
     /**
-     * Create a new instance of StudentService.
+     * Create a new instance of TeacherService.
      *
-     * @param StudentRepositoryInterface $studentRepository
+     * @param TeacherRepositoryInterface $teacherRepository
      * @param ImageServiceInterface $imageService
      */
     public function __construct(
-        StudentRepositoryInterface $studentRepository,
+        TeacherRepositoryInterface $teacherRepository,
         ImageServiceInterface $imageService
     ) {
-        $this->studentRepository = $studentRepository;
+        $this->teacherRepository = $teacherRepository;
         $this->imageService = $imageService;
     }
 
     /**
-     * Get a paginated list of students with optional filters.
+     * Get a paginated list of teachers with optional filters.
      *
      * @param array $filters
      * @param int $perPage
      * @return mixed
      * @throws Exception
      */
-    public function getAllStudent(array $filters, int $perPage)
+    public function getAllTeacher(array $filters, int $perPage)
     {
         try {
-            // Retrieve students from the repository using filters and pagination
-            return $this->studentRepository->getAllStudent($filters, $perPage);
+            // Retrieve teachers from the repository using filters and pagination
+            return $this->teacherRepository->getAllTeacher($filters, $perPage);
         } catch (Exception $e) {
-            // Handle any exceptions that occur while retrieving students
-            throw new Exception('Unable to retrieve student list: ' . $e->getMessage());
+            // Handle any exceptions that occur while retrieving teachers
+            throw new Exception('Unable to retrieve teacher list: ' . $e->getMessage());
         }
     }
 
     // /**
-    //  * Get student details by ID.
+    //  * Get teacher details by ID.
     //  *
     //  * @param int $id
     //  * @return mixed
     //  * @throws ModelNotFoundException
     //  */
-    // public function getStudentDetail(int $id)
+    // public function getTeacherDetail(int $id)
     // {
     //     try {
-    //         // Retrieve student details from the repository by ID
-    //         return $this->studentRepository->getStudentDetail($id);
+    //         // Retrieve teacher details from the repository by ID
+    //         return $this->teacherRepository->getTeacherDetail($id);
     //     } catch (ModelNotFoundException $e) {
-    //         // Handle case where the student is not found
-    //         throw new ModelNotFoundException('Student not found with ID: ' . $id);
+    //         // Handle case where the teacher is not found
+    //         throw new ModelNotFoundException('Teacher not found with ID: ' . $id);
     //     } catch (Exception $e) {
-    //         // Handle any other exceptions that occur while retrieving student details
-    //         throw new Exception('Unable to retrieve student details: ' . $e->getMessage());
+    //         // Handle any other exceptions that occur while retrieving teacher details
+    //         throw new Exception('Unable to retrieve teacher details: ' . $e->getMessage());
     //     }
     // }
 
     // /**
-    //  * Create a new student.
+    //  * Create a new teacher.
     //  *
     //  * @param array $data
     //  * @return mixed
     //  * @throws Exception
     //  */
-    // public function createStudent(array $data)
+    // public function createTeacher(array $data)
     // {
     //     try {
     //         // Hash the password before storing it
@@ -87,7 +87,7 @@ class StudentService extends BaseService implements StudentServiceInterface
 
     //         // Handle image upload from the request if present
     //         if (isset($data['image'])) {
-    //             $data['image'] = $this->imageService->storeImage('student_files', $data['image']);
+    //             $data['image'] = $this->imageService->storeImage('teacher_files', $data['image']);
     //         } elseif (session('image_temp')) {
     //             // Handle temporary image if session data exists
     //             $tempImageName = session('image_temp');
@@ -105,41 +105,41 @@ class StudentService extends BaseService implements StudentServiceInterface
     //                 );
 
     //                 // Store the image in S3 and delete the temporary image
-    //                 $data['image'] = $this->imageService->storeImage('student_files', $image);
+    //                 $data['image'] = $this->imageService->storeImage('teacher_files', $image);
     //                 $this->imageService->deleteImage($tempImagePath);
     //             } else {
     //                 dd('Temp file does not exist in local storage.'); // Debugging statement for missing temp file
     //             }
     //         }
 
-    //         // Create a new student using the repository
-    //         $student = $this->studentRepository->createStudent($data); // Store the created student in $student
+    //         // Create a new teacher using the repository
+    //         $teacher = $this->teacherRepository->createTeacher($data); // Store the created teacher in $teacher
 
     //     } catch (Exception $e) {
-    //         // If an error occurs, delete the newly created student if it exists
-    //         if (isset($student)) {
-    //             $student->delete(); // Delete the student
+    //         // If an error occurs, delete the newly created teacher if it exists
+    //         if (isset($teacher)) {
+    //             $teacher->delete(); // Delete the teacher
     //         }
 
     //         // Handle image storage exceptions
     //         $this->imageService->handleImageException($e, $data);
-    //         throw new Exception('Unable to create student: ' . $e->getMessage());
+    //         throw new Exception('Unable to create teacher: ' . $e->getMessage());
     //     }
     // }
 
     // /**
-    //  * Update an student by ID.
+    //  * Update an teacher by ID.
     //  *
     //  * @param int $id
     //  * @param array $data
     //  * @return mixed
     //  * @throws ModelNotFoundException
     //  */
-    // public function updateStudent(int $id, array $data)
+    // public function updateTeacher(int $id, array $data)
     // {
     //     // Store old data to restore in case of an error
-    //     $oldStudent = $this->studentRepository->getStudentDetail($id);
-    //     $oldImagePath = $oldStudent->image; // Store the old image path
+    //     $oldTeacher = $this->teacherRepository->getTeacherDetail($id);
+    //     $oldImagePath = $oldTeacher->image; // Store the old image path
     //     $image = null;
 
     //     // Start transaction to ensure all changes are atomic
@@ -149,7 +149,7 @@ class StudentService extends BaseService implements StudentServiceInterface
     //         // Handle image upload if present
     //         if (isset($data['image'])) {
     //             // Update image in S3
-    //             $data['image'] = $this->imageService->updateImage('student_files', $data['image'], $oldImagePath);
+    //             $data['image'] = $this->imageService->updateImage('teacher_files', $data['image'], $oldImagePath);
     //         } elseif (session('image_temp')) {
     //             // Handle temporary image if present in session
     //             $tempImageName = session('image_temp');
@@ -167,15 +167,15 @@ class StudentService extends BaseService implements StudentServiceInterface
     //                 );
 
     //                 // Update image in S3 and delete temporary image
-    //                 $data['image'] = $this->imageService->updateImage('student_files', $image, $oldImagePath);
+    //                 $data['image'] = $this->imageService->updateImage('teacher_files', $image, $oldImagePath);
     //                 $this->imageService->deleteImage($tempImagePath); // Delete temporary image
     //             } else {
     //                 dd('Temp file does not exist in local storage.'); // Error message if temporary image does not exist
     //             }
     //         }
 
-    //         // Update student with new data
-    //         $this->studentRepository->updateStudent($id, $data);
+    //         // Update teacher with new data
+    //         $this->teacherRepository->updateTeacher($id, $data);
 
     //         // Commit transaction after successful update
     //         DB::commit();
@@ -185,37 +185,37 @@ class StudentService extends BaseService implements StudentServiceInterface
     //         DB::rollBack();
 
     //         // Restore old data in case of an error
-    //         $this->studentRepository->updateStudent($id, $oldStudent->toArray());
+    //         $this->teacherRepository->updateTeacher($id, $oldTeacher->toArray());
 
     //         // Handle image restoration if it was changed
     //         if (isset($data['image']) && $data['image'] !== $oldImagePath) {
-    //             $this->imageService->updateImageS3('student_files', $oldImagePath, $data['image']);
+    //             $this->imageService->updateImageS3('teacher_files', $oldImagePath, $data['image']);
     //         }
 
     //         // Handle exceptions when an error occurs
     //         $this->imageService->handleImageException($e, $data);
-    //         throw new Exception('Unable to update student: ' . $e->getMessage());
+    //         throw new Exception('Unable to update teacher: ' . $e->getMessage());
     //     }
     // }
 
     // /**
-    //  * Delete an student by ID.
+    //  * Delete an teacher by ID.
     //  *
     //  * @param int $id
     //  * @return bool
     //  * @throws ModelNotFoundException
     //  */
-    // public function deleteStudent(int $id)
+    // public function deleteTeacher(int $id)
     // {
     //     try {
-    //         // Attempt to delete the student using the repository
-    //         return $this->studentRepository->deleteStudent($id);
+    //         // Attempt to delete the teacher using the repository
+    //         return $this->teacherRepository->deleteTeacher($id);
     //     } catch (ModelNotFoundException $e) {
-    //         // Handle case where the student is not found
-    //         throw new ModelNotFoundException('Student not found with ID: ' . $id);
+    //         // Handle case where the teacher is not found
+    //         throw new ModelNotFoundException('Teacher not found with ID: ' . $id);
     //     } catch (Exception $e) {
     //         // Handle any other exceptions that occur during deletion
-    //         throw new Exception('Unable to delete student: ' . $e->getMessage());
+    //         throw new Exception('Unable to delete teacher: ' . $e->getMessage());
     //     }
     // }
 }

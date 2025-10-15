@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -91,6 +92,16 @@ class Student extends Model
         };
     }
 
+    public function getGenderAttribute()
+    {
+        return match ($this->attributes['gender'] ?? null) {
+            'male'   => 'Nam',
+            'female' => 'Nữ',
+            'other'  => 'Khác',
+            default  => null,
+        };
+    }
+
     /**
      * Accessor: tuổi học sinh
      */
@@ -111,5 +122,10 @@ class Student extends Model
     public function getMaskedPhoneAttribute()
     {
         return $this->phone ? substr($this->phone, 0, 4) . '***' : '';
+    }
+
+    public function getFormattedDateOfBirthAttribute()
+    {
+        return $this->date_of_birth ? Carbon::parse($this->date_of_birth)->format('d/m/Y') : null;
     }
 }

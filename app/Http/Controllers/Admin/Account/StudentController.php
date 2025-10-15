@@ -22,19 +22,19 @@ class StudentController extends Controller
     }
 
     /**
-     * Display a list of studentLogs with optional filters.
+     * Display a list of students with optional filters.
      *
      * @param Request $request
      * @return \Illuminate\View\View
      */
     public function index(Request $request)
     {
-        // $studentLogs = $this->studentLogService->getAll([
-        //     'start_time' => request('start_time'),
-        //     'end_time' => request('end_time'),
-        //     'search' => request('search'),  // Filter by search term
-        // ], 5); // Paginate 15 items per page
+        $students = $this->studentService->getAllStudent([
+            'start_date' => $request->input('start_time'),
+            'end_date'   => $request->input('end_time'),
+            'search'     => $request->input('search'),
+        ], 10);
 
-        return view(self::PATH_VIEW . __FUNCTION__);
+        return view(self::PATH_VIEW . __FUNCTION__, compact('students'));
     }
 }

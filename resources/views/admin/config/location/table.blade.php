@@ -12,7 +12,7 @@
 
                         {{-- Dropdown chọn loại --}}
                         <select name="type" class="form-select form-select-sm me-2" style="width: 150px;">
-                            <option value="">Tất cả loại</option>
+                            <option value="">-- Tất cả loại --</option>
                             <option value="tinh" {{ request('type') == 'tinh' ? 'selected' : '' }}>Tỉnh</option>
                             <option value="huyen" {{ request('type') == 'huyen' ? 'selected' : '' }}>Huyện</option>
                             <option value="xa" {{ request('type') == 'xa' ? 'selected' : '' }}>Xã</option>

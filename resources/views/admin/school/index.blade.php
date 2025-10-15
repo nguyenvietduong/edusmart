@@ -3,18 +3,18 @@
 @section('adminContent')
 <div class="container-fluid">
     @include('admin.component.breadcrumb', [
-        'title' => 'Nhật ký hoạt động',
+        'title' => 'Khu vực hành chính',
         'items' => [
-        'Hệ thống' => null,
-        'Người dùng' => null,
-        'Nhật ký hoạt động' => null,
+        'Cấu Hình' => null,
+        'Công Việc' => null,
+        'Khu vực hành chính' => null,
         ]
     ])
 
     <div class="row">
         <div class="row">
             <!--end col-->
-            @include('admin.account.activityLog.table')
+            @include('admin.school.detail')
             <!--end col-->
         </div>
         <!--end row-->

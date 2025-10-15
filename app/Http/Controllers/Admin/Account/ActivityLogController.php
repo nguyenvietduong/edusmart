@@ -33,7 +33,7 @@ class ActivityLogController extends Controller
             'start_time' => request('start_time'),
             'end_time' => request('end_time'),
             'search' => request('search'),  // Filter by search term
-        ], 5); // Paginate 15 items per page
+        ], 10); // Paginate 15 items per page
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('activityLogs'));
     }
